@@ -9,7 +9,6 @@ phases:
   
   build:
     commands:
-      #- . scripts/deploy.sh
       - zip -rj ${TARGET_LAMBDA_FUNCTION_CODE} function/*
       - aws s3 cp ${TARGET_LAMBDA_FUNCTION_CODE} s3://${SOURCE_S3_BUCKET}/${BRANCH}/
       - sam package --template-file template.yml --s3-bucket ${TEMPLATES_S3_BUCKET} --output-template-file packaged.yaml

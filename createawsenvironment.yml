@@ -32,6 +32,8 @@ Resources:
           Principal:
             Service:
             - codebuild.amazonaws.com
+            - codedeploy.amazonaws.com
+            - cloudformation.amazonaws.com
           Action:
             - 'sts:AssumeRole'
 
@@ -47,6 +49,13 @@ Resources:
             - 's3:PutObject'
             - 's3:GetObject'
             Resource: !Sub 'arn:aws:s3:::${SourceS3Bucket}/*'
+          - Effect: Allow
+            Action:
+            - "cloudformation:DescribeStacks"
+            - "cloudformation:ListStackResources"
+            - "cloudwatch:ListMetrics"
+            - "cloudwatch:GetMetricData"
+            Resource: 'arn:aws:cloudformation:::stackfuzzy-doodle*'
       Roles:
       - !Ref RoleFuzzyDoodleSourceBucket
 
