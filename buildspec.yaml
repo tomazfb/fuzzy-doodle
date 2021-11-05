@@ -1,0 +1,30 @@
+version: 0.2
+phases:
+  pre_build:
+    commands:
+      - echo TARGET_LAMBDA_FUNCTION_CODE: ${TARGET_LAMBDA_FUNCTION_CODE}
+      - echo BRANCH : ${BRANCH}
+      - echo SOURCE_S3_BUCKET: ${SOURCE_S3_BUCKET}
+      - echo TEMPLATES_S3_BUCKET: ${TEMPLATES_S3_BUCKET}
+  build:
+    commands:
+      #- . scripts/deploy.sh
+      - zip -rj ${TARGET_LAMBDA_FUNCTION_CODE} function/*
+      - aws s3 cp ${TARGET_LAMBDA_FUNCTION_CODE} s3://${SOURCE_S3_BUCKET}/${BRANCH}/
+      - sam package --template-file template.yml --TemplatesS3Bucket ${TEMPLATES_S3_BUCKET} --LambdaSourceBaseUri s3://${SOURCE_S3_BUCKET}/${BRANCH}/ --output-template-file packaged.yaml
+artifacts:
+  files:
+    - "packaged.yaml"
+  discard-paths: yes
+
+#  install:
+#    runtime-version:
+#      nodejs: 10
+#    commands:
+#      - aws cloudformation package --template-file template.yaml --s3-bucket ${S3_BUCKET} --output-template-file outputTemplate.yaml
+
+#artifacts:
+#  type: zip
+#  files:
+#    - template.yaml
+#    - outputTemplate.yaml
