@@ -2,6 +2,7 @@ version: 0.2
 phases:
   pre_build:
     commands:
+      - echo oi
       - echo TARGET_LAMBDA_FUNCTION_CODE: ${TARGET_LAMBDA_FUNCTION_CODE}
       - echo BRANCH : ${BRANCH}
       - echo SOURCE_S3_BUCKET: ${SOURCE_S3_BUCKET}
