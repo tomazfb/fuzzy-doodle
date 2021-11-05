@@ -45,7 +45,7 @@ Resources:
           - Effect: Allow
             Action: 
             - 's3:PutObject'
-            - 's3:ReadObject'
+            - 's3:GetObject'
             Resource: !Sub 'arn:aws:s3:::${SourceS3Bucket}/*'
       Roles:
       - !Ref RoleFuzzyDoodleSourceBucket
