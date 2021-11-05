@@ -2,18 +2,17 @@ version: 0.2
 phases:
   pre_build:
     commands:
-      - echo TARGET_LAMBDA_FUNCTION_CODE ${TARGET_LAMBDA_FUNCTION_CODE}
-      - echo BRANCH ${BRANCH}
-      - echo SOURCE_S3_BUCKET ${SOURCE_S3_BUCKET}
-      - echo TEMPLATES_S3_BUCKET ${TEMPLATES_S3_BUCKET}
-  
+      - echo TargetLambdaFunctionCode ${TargetLambdaFunctionCode}
+      - echo Branch ${Branch}
+      - echo SourceS3Bucket ${SourceS3Bucket}
+      - echo TemplatesS3Bucket ${TemplatesS3Bucket}
   build:
     commands:
-      - zip -rj ${TARGET_LAMBDA_FUNCTION_CODE} function/*
-      - aws s3 cp ${TARGET_LAMBDA_FUNCTION_CODE} s3://${SOURCE_S3_BUCKET}/${BRANCH}/
-      - sam package --template-file template.yml --s3-bucket ${TEMPLATES_S3_BUCKET} --output-template-file packaged.yaml
+      - zip -rj ${TargetLambdaFunctionCode} function/*
+      - aws s3 cp ${TargetLambdaFunctionCode} s3://${SourceS3Bucket}/${Branch}/
+      - sam package --template-file template.yml --s3-bucket ${SourceS3Bucket} --output-template-file packaged.yaml
       - cat packaged.yaml
-      
+
 artifacts:
   files:
     - "packaged.yaml"
