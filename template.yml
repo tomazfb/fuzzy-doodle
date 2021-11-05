@@ -4,9 +4,9 @@ Description: >
   A serverless (AWS based) document generator based on templates
 
 Parameters:
-  LambdaSourceBaseUri:
+  SOURCE_S3_BUCKET:
     Type: String
-  TemplatesS3Bucket:
+  TEMPLATES_S3_BUCKET:
    Type: String
 
 Resources:
@@ -14,18 +14,18 @@ Resources:
    Type: AWS::S3::Bucket
    DeletionPolicy: Retain
    Properties:
-     BucketName: !Sub ${TemplatesS3Bucket}
+     BucketName: !Sub ${TEMPLATES_S3_BUCKET}
 
   DocGenerator:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: DocGenerator
-      CodeUri: !Sub ${LambdaSourceBaseUri}/DocGenerator.zip
+      CodeUri: !Sub ${SOURCE_S3_BUCKET}/${BRANCH}/${TARGET_LAMBDA_FUNCTION_CODE}
       Handler: doc-generator.app.lambda_handler
       Runtime: python3.9
       Environment:
         Variables:
-          TemplatesS3Bucket: !Sub "arn:aws:s3:${AWS::Region}:${AWS::AccountId}:${TemplatesS3Bucket}"
+          TemplatesS3Bucket: !Sub "arn:aws:s3:${AWS::Region}:${AWS::AccountId}:${TEMPLATES_S3_BUCKET}"
       AutoPublishAlias: live
       DeploymentPreference:
         Type: AllAtOnce
@@ -35,7 +35,7 @@ Resources:
         - LambdaInvokePolicy:
             FunctionName: DocGenerator
         - S3ReadPolicy:
-            BucketName: !Sub "${TemplatesS3Bucket}"
+            BucketName: !Sub "${TEMPLATES_S3_BUCKET}"
       Events:
         MyFunctionApi:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
