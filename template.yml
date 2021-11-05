@@ -1,0 +1,54 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  A serverless (AWS based) document generator based on templates
+
+Parameters:
+  LambdaSourceBaseUri:
+    Type: String
+  TemplatesS3Bucket:
+   Type: String
+
+Resources:
+  TemplatesBucket:
+   Type: AWS::S3::Bucket
+   DeletionPolicy: Retain
+   Properties:
+     BucketName: !Sub ${TemplatesS3Bucket}
+
+  DocGenerator:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: DocGenerator
+      CodeUri: !Sub ${LambdaSourceBaseUri}/DocGenerator.zip
+      Handler: doc-generator.app.lambda_handler
+      Runtime: python3.9
+      Environment:
+        Variables:
+          TemplatesS3Bucket: !Sub "arn:aws:s3:${AWS::Region}:${AWS::AccountId}:${TemplatesS3Bucket}"
+      AutoPublishAlias: live
+      DeploymentPreference:
+        Type: AllAtOnce
+      Timeout: 60
+      MemorySize: 512
+      Policies:
+        - LambdaInvokePolicy:
+            FunctionName: DocGenerator
+        - S3ReadPolicy:
+            BucketName: !Sub "${TemplatesS3Bucket}"
+      Events:
+        MyFunctionApi:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /doc-generator
+            Method: post
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  DocGeneratorApi:
+    Description: "API Gateway endpoint URL for Prod stage for function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/doc-generator/"
+  HelloWorldFunction:
+    Description: "Lambda Function ARN"
+    Value: !GetAtt DocGenerator.Arn

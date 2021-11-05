@@ -1,0 +1,20 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  Cria o ambiente na AWS com
+  1. Bucket S3 para o fonte do Lambda
+  2. (TODO) Pipeline
+
+  Executar os comandos abaixo no AWS CLI
+  aws
+
+Parameters:
+  LambdaSourceBaseUri:
+    Type: String
+
+Resources:
+  TemplatesBucket:
+   Type: AWS::S3::Bucket
+   DeletionPolicy: Retain
+   Properties:
+     BucketName: !Sub ${TemplatesS3Bucket}
+  

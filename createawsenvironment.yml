@@ -2,21 +2,52 @@ AWSTemplateFormatVersion: '2010-09-09'
 Description: >
   Cria o ambiente na AWS com
   1. Bucket S3 para o fonte do Lambda
-  2. (TODO) Pipeline
+  2. Policies e Roles
+  3. (TODO) CodePipeline
 
   Executar os comandos abaixo no AWS CLI
-  aws cloudformation create-stack --stack-name fuzzy-doodle-environment --template-body file://createawsenvironment.yml --parameters ParameterKey=TemplatesS3Bucket,ParameterValue=fuzzy-doodle-source
+  aws cloudformation create-stack --capabilities CAPABILITY_NAMED_IAM --stack-name fuzzy-doodle-environment --template-body file://createawsenvironment.yml --parameters ParameterKey=SourceS3Bucket,ParameterValue=fuzzy-doodle-source
 
 Parameters:
-  TemplatesS3Bucket:
+  SourceS3Bucket:
     Type: String
 
 Resources:
-  TemplatesBucket:
+  SourceBucket:
    Type: AWS::S3::Bucket
    DeletionPolicy: Retain
    Properties:
-      BucketName: !Sub ${TemplatesS3Bucket}
+      BucketName: !Sub ${SourceS3Bucket}
       VersioningConfiguration:
         Status: Enabled
-  
+
+  RoleFuzzyDoodleSourceBucket:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub RoleFuzzyDoodleSourceBucket-${SourceS3Bucket}
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - codebuild.amazonaws.com
+          Action:
+            - 'sts:AssumeRole'
+
+  PolicyFuzzyDoodleSourceBucket:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: !Sub PolicyFuzzyDoodleSourceBucket-${SourceS3Bucket}
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action: 
+            - 's3:PutObject'
+            - 's3:ReadObject'
+            Resource: !Sub 'arn:aws:s3:::${SourceS3Bucket}/*'
+      Roles:
+      - !Ref RoleFuzzyDoodleSourceBucket
+
+      
