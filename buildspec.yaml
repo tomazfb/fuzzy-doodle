@@ -6,6 +6,7 @@ phases:
       - echo BRANCH ${BRANCH}
       - echo SOURCE_S3_BUCKET ${SOURCE_S3_BUCKET}
       - echo TEMPLATES_S3_BUCKET ${TEMPLATES_S3_BUCKET}
+  
   build:
     commands:
       #- . scripts/deploy.sh
