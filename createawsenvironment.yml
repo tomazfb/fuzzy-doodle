@@ -1,0 +1,22 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  Cria o ambiente na AWS com
+  1. Bucket S3 para o fonte do Lambda
+  2. (TODO) Pipeline
+
+  Executar os comandos abaixo no AWS CLI
+  aws cloudformation create-stack --stack-name fuzzy-doodle-environment --template-body file://createawsenvironment.yml --parameters ParameterKey=TemplatesS3Bucket,ParameterValue=fuzzy-doodle-source
+
+Parameters:
+  TemplatesS3Bucket:
+    Type: String
+
+Resources:
+  TemplatesBucket:
+   Type: AWS::S3::Bucket
+   DeletionPolicy: Retain
+   Properties:
+      BucketName: !Sub ${TemplatesS3Bucket}
+      VersioningConfiguration:
+        Status: Enabled
+  
