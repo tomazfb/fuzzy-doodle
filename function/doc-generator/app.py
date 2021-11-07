@@ -79,4 +79,4 @@ def lambda_handler(event, context):
     }
 
 
-__init()
+#__init()
