@@ -37,6 +37,7 @@ Resources:
             - iam.amazonaws.com
             - s3.amazonaws.com
             - lambda.amazonaws.com
+            - apigateway.amazonaws.com
           Action:
             - 'sts:AssumeRole'
 
@@ -52,12 +53,16 @@ Resources:
             - 's3:PutObject'
             - 's3:GetObject'
             Resource: !Sub 'arn:aws:s3:::${SourceS3Bucket}/*'
-          - Effect: Allow
+          - Effect: Allow #permissoes necessarias para criar a stack
             Action:
             - 's3:CreateBucket'
+            - 's3:DeleteBucket'
+            - 's3:ListAllMyBuckets'
             - 'codedeploy:CreateApplication'
             - 'codedeploy:DeleteApplication'
             - 'codedeploy:CreateDeploymentGroup'
+            - 'codedeploy:DeleteDeploymentGroup'
+            - 'codedeploy:DeleteDeploy'
             - 'iam:CreateRole'
             - 'iam:DeleteRole'
             - 'iam:GetRole'
@@ -69,6 +74,14 @@ Resources:
             - 'iam:DeleteRolePolicy'
             - 'codedeploy:DeleteApplication'
             - 'lambda:GetFunction'
+            - 'lambda:CreateFunction'
+            - 'lambda:DeleteFunction'
+            - 'lambda:ListVersionsByFunction'
+            - 'lambda:PublishVersion'
+            - 'lambda:CreateAlias'
+            - 'lambda:DeleteAlias'
+            - 'lambda:AddPermission'
+            - 'apigateway:*'
             Resource: '*'
           - Effect: Allow
             Action:
