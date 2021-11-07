@@ -2,10 +2,10 @@ version: 0.2
 phases:
   pre_build:
     commands:
-      #- echo TargetLambdaFunctionCode ${TargetLambdaFunctionCode}
-      #- echo Branch ${Branch}
-      #- echo SourceS3Bucket ${SourceS3Bucket}
-      #- echo TemplatesS3Bucket ${TemplatesS3Bucket}
+      - echo TargetLambdaFunctionCode ${TargetLambdaFunctionCode}
+      - echo Branch ${Branch}
+      - echo SourceS3Bucket ${SourceS3Bucket}
+      - echo TemplatesS3Bucket ${TemplatesS3Bucket}
       - >
         echo '
         {
