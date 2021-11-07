@@ -7,17 +7,7 @@ phases:
       - echo SourceS3Bucket ${SourceS3Bucket}
       - echo TemplatesS3Bucket "${TemplatesS3Bucket}"
       - >
-        echo '
-        {
-          {
-            "Parameters" : {
-              "TargetLambdaFunctionCode" : "${TargetLambdaFunctionCode}",
-              "Branch": "main",
-              "SourceS3Bucket" : "${SourceS3Bucket}",
-              "TemplatesS3Bucket" : "${TemplatesS3Bucket}"
-            }
-          }
-        }' > deployparameters.json 
+        echo '[{"ParameterKey": "TargetLambdaFunctionCode", "ParameterValue": "${TargetLambdaFunctionCode}"}]' > deployparameters.json 
       - cat deployparameters.json 
   build:
     commands:
