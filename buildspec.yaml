@@ -29,6 +29,7 @@ phases:
 artifacts:
   files:
     - "packaged.yaml"
+    - "deployparameters.json"
   discard-paths: yes
 
 #  install:
