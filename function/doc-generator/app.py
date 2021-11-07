@@ -7,7 +7,34 @@ import logging
 
 
 def __init():
-    event = {'resource': '/doc-generator', 'path': '/doc-generator', 'httpMethod': 'POST', 'headers': None, 'multiValueHeaders': None, 'queryStringParameters': None, 'multiValueQueryStringParameters': None, 'pathParameters': None, 'stageVariables': None, 'requestContext': {'resourceId': 'a7j9hu', 'resourcePath': '/doc-generator', 'httpMethod': 'POST', 'extendedRequestId': 'IdQhOFUMIAMFYYg=', 'requestTime': '07/Nov/2021:23:28:58 +0000', 'path': '/doc-generator', 'accountId': '668721781078', 'protocol': 'HTTP/1.1', 'stage': 'test-invoke-stage', 'domainPrefix': 'testPrefix', 'requestTimeEpoch': 1636327738890, 'requestId': '5a1fe4b8-92f6-4281-be54-6140723f77b4', 'identity': {'cognitoIdentityPoolId': None, 'cognitoIdentityId': None, 'apiKey': 'test-invoke-api-key', 'principalOrgId': None, 'cognitoAuthenticationType': None, 'userArn': 'arn:aws:iam::668721781078:user/tom', 'apiKeyId': 'test-invoke-api-key-id', 'userAgent': 'aws-internal/3 aws-sdk-java/1.12.76 Linux/5.4.134-73.228.amzn2int.x86_64 OpenJDK_64-Bit_Server_VM/25.302-b08 java/1.8.0_302 vendor/Oracle_Corporation cfg/retry-mode/standard', 'accountId': '668721781078', 'caller': 'AIDAZXMXMTFLGLL3GANQT', 'sourceIp': 'test-invoke-source-ip', 'accessKey': 'ASIAZXMXMTFLBHNXXIF3', 'cognitoAuthenticationProvider': None, 'user': 'AIDAZXMXMTFLGLL3GANQT'}, 'domainName': 'testPrefix.testDomainName', 'apiId': 'jcckpg5yx7'}, 'body': '{\n        "template": "meutemplate.html",\n        "variables": {\n            "nome": "Fulanto de Tal",\n            "cpf": "123.456.789-04"\n        }\n    }', 'isBase64Encoded': False}
+    event = {
+        'resource': '/doc-generator', 
+        'path': '/doc-generator', 
+        'httpMethod': 'POST', 
+        'headers': None, 
+        'multiValueHeaders': None, 
+        'queryStringParameters': None, 
+        'multiValueQueryStringParameters': None, 
+        'pathParameters': None, 
+        'stageVariables': None, 
+        'requestContext': {
+            'resourceId': 'a7j9hu', 
+            'resourcePath': '/doc-generator', 
+            'httpMethod': 'POST', 
+            'extendedRequestId': 'IdQhOFUMIAMFYYg=', 
+            'requestTime': '07/Nov/2021:23:28:58 +0000', 
+            'path': '/doc-generator', 
+            'accountId': '668721781078', 
+            'protocol': 'HTTP/1.1', 
+            'stage': 'test-invoke-stage', 
+            'domainPrefix': 'testPrefix', 
+            'requestTimeEpoch': 1636327738890, 
+            'requestId': '5a1fe4b8-92f6-4281-be54-6140723f77b4', 
+            'identity': {'cognitoIdentityPoolId': None, 'cognitoIdentityId': None, 'apiKey': 'test-invoke-api-key', 'principalOrgId': None, 'cognitoAuthenticationType': None, 'userArn': 'arn:aws:iam::668721781078:user/tom', 'apiKeyId': 'test-invoke-api-key-id', 'userAgent': 'aws-internal/3 aws-sdk-java/1.12.76 Linux/5.4.134-73.228.amzn2int.x86_64 OpenJDK_64-Bit_Server_VM/25.302-b08 java/1.8.0_302 vendor/Oracle_Corporation cfg/retry-mode/standard', 'accountId': '668721781078', 'caller': 'AIDAZXMXMTFLGLL3GANQT', 'sourceIp': 'test-invoke-source-ip', 'accessKey': 'ASIAZXMXMTFLBHNXXIF3', 'cognitoAuthenticationProvider': None, 'user': 'AIDAZXMXMTFLGLL3GANQT'}, 'domainName': 'testPrefix.testDomainName', 'apiId': 'jcckpg5yx7'
+            }, 
+        'body': '{        "template": "meutemplate.html",        "variables": {            "nome": "Fulano de Tal",            "cpf": "123.456.789-04"        }    }', 
+        'isBase64Encoded': False
+        }
     os.environ["TemplatesS3Bucket"] = "fuzzy-doodle-templates"
 
     lambda_handler(event, None)
@@ -74,7 +101,7 @@ def lambda_handler(event, context):
         "body": result
         #json.dumps({
         #    "message": "hello world",
-        #    # "location": ip.text.replace("\n", "")
+        #    # "location": ip.text.replace("", "")
         #}),
     }
 
