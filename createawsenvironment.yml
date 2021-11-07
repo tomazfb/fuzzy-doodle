@@ -21,10 +21,10 @@ Resources:
       VersioningConfiguration:
         Status: Enabled
 
-  RoleFuzzyDoodleSourceBucket:
+  RoleFuzzyDoodle:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: !Sub RoleFuzzyDoodleSourceBucket-${SourceS3Bucket}
+      RoleName: !Sub RoleFuzzyDoodle
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -34,13 +34,15 @@ Resources:
             - codebuild.amazonaws.com
             - codedeploy.amazonaws.com
             - cloudformation.amazonaws.com
+            - iam.amazonaws.com
+            - s3.amazonaws.com
           Action:
             - 'sts:AssumeRole'
 
-  PolicyFuzzyDoodleSourceBucket:
+  PolicyFuzzyDoodle:
     Type: AWS::IAM::Policy
     Properties:
-      PolicyName: !Sub PolicyFuzzyDoodleSourceBucket-${SourceS3Bucket}
+      PolicyName: !Sub PolicyFuzzyDoodle
       PolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -49,6 +51,16 @@ Resources:
             - 's3:PutObject'
             - 's3:GetObject'
             Resource: !Sub 'arn:aws:s3:::${SourceS3Bucket}/*'
+          - Effect: Allow
+            Action:
+            - 's3:CreateBucket'
+            - 'codedeploy:CreateApplication'
+            - 'codedeploy:DeleteApplication'
+            - 'iam:CreateRole'
+            - 'iam:AttachRolePolicy'
+            - 'iam:DetachRolePolicy'
+            - 'codedeploy:DeleteApplication'
+            Resource: '*'
           - Effect: Allow
             Action:
             - "cloudformation:DescribeStacks"
@@ -60,4 +72,4 @@ Resources:
             - 'arn:aws:cloudformation:::stackfuzzy-doodle*'
             - 'arn:aws:cloudformation:*:aws:transform/Serverless*'
       Roles:
-      - !Ref RoleFuzzyDoodleSourceBucket
+      - !Ref RoleFuzzyDoodle
