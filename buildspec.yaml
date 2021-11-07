@@ -5,14 +5,14 @@ phases:
       - echo TargetLambdaFunctionCode ${TargetLambdaFunctionCode}
       - echo Branch ${Branch}
       - echo SourceS3Bucket ${SourceS3Bucket}
-      - echo TemplatesS3Bucket ${TemplatesS3Bucket}
+      - echo TemplatesS3Bucket "${TemplatesS3Bucket}"
       - >
         echo '
         {
           {
             "Parameters" : {
               "TargetLambdaFunctionCode" : "${TargetLambdaFunctionCode}",
-              "Branch": "${Branch}",
+              "Branch": "main",
               "SourceS3Bucket" : "${SourceS3Bucket}",
               "TemplatesS3Bucket" : "${TemplatesS3Bucket}"
             }
