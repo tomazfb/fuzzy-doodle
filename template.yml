@@ -7,13 +7,16 @@ Parameters:
   TemplatesS3Bucket:
     Type: String
     #Description: blabla
-    #Default: xxx
+    Default: fuzzy-doodle-templates
   SourceS3Bucket:
     Type: String
+    Default: fuzzy-doodle-source
   Branch:
     Type: String
+    Default: main
   TargetLambdaFunctionCode:
     Type: String
+    Default: fuzzy-doodle.zip
 
 Resources:
   TemplatesBucket:
@@ -26,7 +29,9 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: DocGenerator
-      CodeUri: !Sub s3://${SourceS3Bucket}/${Branch}/${TargetLambdaFunctionCode}
+      CodeUri: #!Sub s3://${SourceS3Bucket}/${Branch}/${TargetLambdaFunctionCode}
+        Bucket: !Sub ${SourceS3Bucket}
+        Key: !Sub ${Branch}/${TargetLambdaFunctionCode}
       Handler: doc-generator.app.lambda_handler
       Runtime: python3.9
       Environment:
@@ -46,7 +51,7 @@ Resources:
         MyFunctionApi:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
-            Path: /fuzzy-doodle
+            Path: /doc-generator
             Method: post
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
