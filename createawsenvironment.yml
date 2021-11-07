@@ -76,11 +76,13 @@ Resources:
             - 'lambda:GetFunction'
             - 'lambda:CreateFunction'
             - 'lambda:DeleteFunction'
+            - 'lambda:UpdateFunction'
             - 'lambda:ListVersionsByFunction'
             - 'lambda:PublishVersion'
             - 'lambda:CreateAlias'
             - 'lambda:DeleteAlias'
             - 'lambda:AddPermission'
+            - 'lambda:RemovePermission'
             - 'apigateway:*'
             Resource: '*'
           - Effect: Allow
