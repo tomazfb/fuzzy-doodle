@@ -57,8 +57,10 @@ Resources:
             - 'codedeploy:CreateApplication'
             - 'codedeploy:DeleteApplication'
             - 'iam:CreateRole'
+            - 'iam:DeleteRole'
             - 'iam:AttachRolePolicy'
             - 'iam:DetachRolePolicy'
+            - 'iam:DeleteRolePolicy'
             - 'codedeploy:DeleteApplication'
             Resource: '*'
           - Effect: Allow

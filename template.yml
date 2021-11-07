@@ -22,6 +22,7 @@ Resources:
   TemplatesBucket:
    Type: AWS::S3::Bucket
    DeletionPolicy: Retain
+   UpdateReplacePolicy: Retain
    Properties:
      BucketName: !Sub ${TemplatesS3Bucket}
 
