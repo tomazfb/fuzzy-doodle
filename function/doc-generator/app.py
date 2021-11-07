@@ -41,6 +41,8 @@ def lambda_handler(event, context):
     """
     logging.basicConfig(level=logging.INFO)
 
+    logging.info("event=%s", event)
+
     bucket = os.environ['TemplatesS3Bucket'] # this comes from template.yml configuration and its set on ci/cd time
     logging.info("bucket=%s",bucket)
 
