@@ -36,6 +36,7 @@ Resources:
             - cloudformation.amazonaws.com
             - iam.amazonaws.com
             - s3.amazonaws.com
+            - lambda.amazonaws.com
           Action:
             - 'sts:AssumeRole'
 
@@ -56,12 +57,18 @@ Resources:
             - 's3:CreateBucket'
             - 'codedeploy:CreateApplication'
             - 'codedeploy:DeleteApplication'
+            - 'codedeploy:CreateDeploymentGroup'
             - 'iam:CreateRole'
             - 'iam:DeleteRole'
+            - 'iam:GetRole'
+            - 'iam:PassRole'
+            - 'iam:GetRolePolicy'
+            - 'iam:PutRolePolicy'
             - 'iam:AttachRolePolicy'
             - 'iam:DetachRolePolicy'
             - 'iam:DeleteRolePolicy'
             - 'codedeploy:DeleteApplication'
+            - 'lambda:GetFunction'
             Resource: '*'
           - Effect: Allow
             Action:
