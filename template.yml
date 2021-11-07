@@ -32,7 +32,7 @@ Resources:
       CodeUri: #!Sub s3://${SourceS3Bucket}/${Branch}/${TargetLambdaFunctionCode}
         Bucket: !Sub ${SourceS3Bucket}
         Key: !Sub ${Branch}/${TargetLambdaFunctionCode}
-      Handler: doc-generator.app.lambda_handler
+      Handler: app.lambda_handler
       Runtime: python3.9
       Environment:
         Variables:
