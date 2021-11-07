@@ -2,10 +2,23 @@ version: 0.2
 phases:
   pre_build:
     commands:
-      - echo TargetLambdaFunctionCode ${TargetLambdaFunctionCode}
-      - echo Branch ${Branch}
-      - echo SourceS3Bucket ${SourceS3Bucket}
-      - echo TemplatesS3Bucket ${TemplatesS3Bucket}
+      #- echo TargetLambdaFunctionCode ${TargetLambdaFunctionCode}
+      #- echo Branch ${Branch}
+      #- echo SourceS3Bucket ${SourceS3Bucket}
+      #- echo TemplatesS3Bucket ${TemplatesS3Bucket}
+      - >
+        echo '
+        {
+          {
+            "Parameters" : {
+              "TargetLambdaFunctionCode" : "${TargetLambdaFunctionCode}",
+              "Branch": "${Branch}",
+              "SourceS3Bucket" : "${SourceS3Bucket}",
+              "TemplatesS3Bucket" : "${TemplatesS3Bucket}"
+            }
+          }
+        }' > deployparameters.json 
+      - echo deployparameters.json 
   build:
     commands:
       - zip -rj ${TargetLambdaFunctionCode} function/*

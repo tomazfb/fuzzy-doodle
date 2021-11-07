@@ -53,10 +53,11 @@ Resources:
             Action:
             - "cloudformation:DescribeStacks"
             - "cloudformation:ListStackResources"
+            - "cloudformation:CreateChangeSet"
             - "cloudwatch:ListMetrics"
             - "cloudwatch:GetMetricData"
-            Resource: 'arn:aws:cloudformation:::stackfuzzy-doodle*'
+            Resource: 
+            - 'arn:aws:cloudformation:::stackfuzzy-doodle*'
+            - 'arn:aws:cloudformation:*:aws:transform/Serverless*'
       Roles:
       - !Ref RoleFuzzyDoodleSourceBucket
-
-      
